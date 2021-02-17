@@ -48,6 +48,7 @@ namespace NUnitTestArticle4
             {
                 Assert.AreEqual(true, g1.nodes[i].visited);
             }
+            g1.setVisitationFlagToFalse();
         }
         [Test]
         public void TestSearchBFSForGraph()
@@ -57,6 +58,33 @@ namespace NUnitTestArticle4
             {
                 Assert.AreEqual(true, g1.nodes[i].visited);
             }
+            g1.setVisitationFlagToFalse();
+        }
+        [Test]
+        public void TestisThereWayForGraph()
+        {
+            Assert.AreEqual(true, g1.isThereWay(g1.nodes[0], g1.nodes[3]));
+            g1.setVisitationFlagToFalse();
+            Assert.AreEqual(true, g1.isThereWay(g1.nodes[0], g1.nodes[2]));
+            g1.setVisitationFlagToFalse();
+            Assert.AreEqual(true, g1.isThereWay(g1.nodes[3], g1.nodes[1]));
+            g1.setVisitationFlagToFalse();
+            Assert.AreEqual(true, g1.isThereWay(g1.nodes[1], g1.nodes[3]));
+            g1.setVisitationFlagToFalse();
+            Assert.AreEqual(false, g1.isThereWay(g1.nodes[5], g1.nodes[0]));
+            g1.setVisitationFlagToFalse();
+            Assert.AreEqual(false, g1.isThereWay(g1.nodes[3], g1.nodes[0]));
+            g1.setVisitationFlagToFalse();
+            Assert.AreEqual(false, g1.isThereWay(g1.nodes[4], g1.nodes[0]));
+            g1.setVisitationFlagToFalse();
+            Assert.AreEqual(false, g1.isThereWay(g1.nodes[4], g1.nodes[5]));
+            g1.setVisitationFlagToFalse();
+            Assert.AreEqual(false, g1.isThereWay(g1.nodes[3], g1.nodes[0]));
+            g1.setVisitationFlagToFalse();
+            Assert.AreEqual(false, g1.isThereWay(g1.nodes[4], g1.nodes[3]));
+            g1.setVisitationFlagToFalse();
+            Assert.AreEqual(false, g1.isThereWay(g1.nodes[4], g1.nodes[2]));
+            g1.setVisitationFlagToFalse();
         }
     }
 }

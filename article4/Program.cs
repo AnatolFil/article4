@@ -71,7 +71,47 @@ namespace article4
                 }
             }
         }
-
+        public void setVisitationFlagToFalse()
+        {
+            if(this.nodes != null)
+            {
+                for(int i=0;i<nodes.Length;i++)
+                {
+                    nodes[i].visited = false;
+                }
+            }
+        }
+        public bool isThereWay(node a, node b)
+        {
+            bool res = false;
+            if(a != null && b != null)
+            {
+                Queue q = new Queue();
+                a.visited = true;
+                q.Enqueue(a);
+                while(q.Count>0)
+                {
+                    node n = q.Dequeue() as node;
+                    if(n==b)
+                    {
+                        res = true;
+                        break;
+                    }                    
+                    if(n.children != null)
+                    {
+                        for(int i=0;i<n.children.Length;i++)
+                        {
+                            if (n.children[i].visited != true)
+                            {
+                                n.children[i].visited = true;
+                                q.Enqueue(n.children[i]);
+                            }     
+                        }
+                    }
+                }
+            }
+            return res;
+        }
     }
     
 }

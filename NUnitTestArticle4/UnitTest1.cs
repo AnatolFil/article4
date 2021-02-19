@@ -1,5 +1,6 @@
 using article4;
 using NUnit.Framework;
+using System;
 
 namespace NUnitTestArticle4
 {
@@ -85,6 +86,19 @@ namespace NUnitTestArticle4
             g1.setVisitationFlagToFalse();
             Assert.AreEqual(false, g1.isThereWay(g1.nodes[4], g1.nodes[2]));
             g1.setVisitationFlagToFalse();
+        }
+        [Test]
+        public void TestAddForBinaryTree()
+        {
+            int countOfEl = 100;
+            Random rand = new Random(DateTime.Now.Millisecond);
+            binaryTree<int> bt = new binaryTree<int>();
+            for (int i = 0; i<countOfEl; i++)
+            {
+
+                bt.add(rand.Next());
+            }
+            Assert.AreEqual(countOfEl, bt.Count);
         }
     }
 }

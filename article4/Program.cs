@@ -189,6 +189,15 @@ namespace article4
                 count++;
             }
         }
+        public void getAll(Queue q, treeNode<T> node)
+        {
+            if (node == null)
+                return;
+            getAll(q, node.left);
+            q.Enqueue(node);
+            getAll(q, node.right);
+        }
+    
     }
 
 }

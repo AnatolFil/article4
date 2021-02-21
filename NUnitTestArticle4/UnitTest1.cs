@@ -1,6 +1,7 @@
 using article4;
 using NUnit.Framework;
 using System;
+using System.Collections;
 
 namespace NUnitTestArticle4
 {
@@ -90,13 +91,33 @@ namespace NUnitTestArticle4
         [Test]
         public void TestAddForBinaryTree()
         {
-            int countOfEl = 100;
+            int countOfEl = 1000;
             Random rand = new Random(DateTime.Now.Millisecond);
             binaryTree<int> bt = new binaryTree<int>();
             for (int i = 0; i<countOfEl; i++)
             {
 
                 bt.add(rand.Next());
+            }
+            Assert.AreEqual(countOfEl, bt.Count);
+        }
+        [Test]
+        public void TestGetAllForBinaryTree()
+        {
+            int countOfEl = 1000;
+            Random rand = new Random(DateTime.Now.Millisecond);
+            binaryTree<int> bt = new binaryTree<int>();
+            Queue q = new Queue();
+            for (int i = 0; i < countOfEl; i++)
+            {
+                bt.add(rand.Next());
+            }
+            bt.getAll(q, bt.root);
+            while(q.Count>1)
+            {
+                int first = (q.Dequeue() as treeNode<int>).value;
+                int second = (q.Dequeue() as treeNode<int>).value;
+                Assert.IsTrue(first <= second);
             }
             Assert.AreEqual(countOfEl, bt.Count);
         }

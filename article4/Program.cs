@@ -142,6 +142,11 @@ namespace article4
         {
             get { return count; }
         }
+        private uint maxLvl;
+        public uint MaxLvl
+        {
+            get { return maxLvl; }
+        }
         public binaryTree()
         {
             root = null;
@@ -149,6 +154,7 @@ namespace article4
         }
         public void add(T element)
         {
+            uint lvl = 0;
             if(root == null)
             {
                 root = new treeNode<T>();
@@ -160,32 +166,9 @@ namespace article4
             }
             else
             {
-                treeNode<T> current = root;
-                while(current != null)
-                {
-                    if(element.CompareTo(current.value) >= 0)
-                    {
-                        if (current.right == null)
-                        {
-                            current.right = new treeNode<T>();
-                            current.right.value = element;
-                            current.right.parent = current;
-                            break;
-                        }                            
-                        current = current.right;
-                    }
-                    else
-                    {
-                        if (current.left == null)
-                        {
-                            current.left = new treeNode<T>();
-                            current.left.value = element;
-                            current.left.parent = current;
-                            break;
-                        }  
-                        current = current.left;
-                    }
-                }
+                lvl = addTo(root, element);
+                if (lvl > maxLvl)
+                    maxLvl = lvl;
                 count++;
             }
         }
@@ -197,7 +180,82 @@ namespace article4
             q.Enqueue(node);
             getAll(q, node.right);
         }
-    
+        public void buildMinTreeFromMas(T[] mas, int start, int end)
+        {
+            //if (start == end)
+            //{
+            //    add(mas[start]);
+            //    return;
+            //}
+            if (start > end)
+                return;
+            int mid = (end + start)/2;
+            add(mas[mid]);
+            buildMinTreeFromMas(mas, start, mid - 1);
+            
+            buildMinTreeFromMas(mas, mid+1, end);
+        }
+        private uint addTo(treeNode<T> node, T element, uint startLvl = 0)
+        {
+            uint lvl = startLvl;
+            if (node != null)
+            {
+                treeNode<T> current = root;
+                while (current != null)
+                {
+                    lvl++;
+                    if (element.CompareTo(current.value) >= 0)
+                    {
+                        if (current.right == null)
+                        {
+                            current.right = new treeNode<T>();
+                            current.right.value = element;
+                            current.right.parent = current;
+                            break;
+                        }
+                        current = current.right;
+                    }
+                    else
+                    {
+                        if (current.left == null)
+                        {
+                            current.left = new treeNode<T>();
+                            current.left.value = element;
+                            current.left.parent = current;
+                            break;
+                        }
+                        current = current.left;
+                    }
+                }
+            }
+            return lvl;
+        }
+        private treeNode<T> buildMinTree(T[] mas, int start, int end, treeNode<T> parent)
+        {
+            if (start > end)
+                return null;
+            treeNode<T> n = new treeNode<T>();
+            int mid = (start + end) / 2;
+            n.value = mas[mid];
+            n.parent = parent;
+            n.left = buildMinTree(mas, start, mid - 1, n);
+            n.right = buildMinTree(mas, mid + 1, end, n);
+            return n;
+        }
+        public void buildMinTreeFromMas(T[] mas)
+        {
+            if(mas.Length > 0 && root == null)
+            {
+                root = new treeNode<T>();
+                root.parent = null;
+                int mid = (mas.Length - 1) / 2;
+                root.value = mas[mid];
+                root.left = buildMinTree(mas, 0, mid - 1, root);
+                root.right = buildMinTree(mas, mid + 1, mas.Length - 1, root);
+                count = (uint)mas.Length;
+                maxLvl = (uint)Math.Log2(count);
+            }
+        }
     }
 
 }

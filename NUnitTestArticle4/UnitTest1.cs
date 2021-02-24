@@ -121,5 +121,45 @@ namespace NUnitTestArticle4
             }
             Assert.AreEqual(countOfEl, bt.Count);
         }
+        [Test]
+        public void TestBuildMinTreeFromMasForBinaryTree()
+        {
+            for(int j=0;j < 100; j++)
+            {
+                Random rand = new Random(DateTime.Now.Millisecond);
+                int countOfEl = rand.Next(0,10000);
+                binaryTree<int> bt = new binaryTree<int>();
+                int[] mas = new int[countOfEl];
+                for (int i = 0; i < countOfEl; i++)
+                {
+                    mas[i] = i;
+                }
+                bt.buildMinTreeFromMas(mas, 0, countOfEl - 1);
+                double lvl = Math.Log2(countOfEl);
+                uint natLvl = (uint)lvl;
+                Assert.AreEqual(natLvl, bt.MaxLvl);
+                Assert.AreEqual(countOfEl, bt.Count);
+            }
+        }
+        [Test]
+        public void TestBuildMinTreeFromMasFasterForBinaryTree()
+        {
+            for (int j = 0; j < 100; j++)
+            {
+                Random rand = new Random(DateTime.Now.Millisecond);
+                int countOfEl = rand.Next(0, 10000);
+                binaryTree<int> bt = new binaryTree<int>();
+                int[] mas = new int[countOfEl];
+                for (int i = 0; i < countOfEl; i++)
+                {
+                    mas[i] = i;
+                }
+                bt.buildMinTreeFromMas(mas);
+                double lvl = Math.Log2(countOfEl);
+                uint natLvl = (uint)lvl;
+                Assert.AreEqual(natLvl, bt.MaxLvl);
+                Assert.AreEqual(countOfEl, bt.Count);
+            }
+        }
     }
 }

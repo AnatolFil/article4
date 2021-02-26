@@ -256,6 +256,29 @@ namespace article4
                 maxLvl = (uint)Math.Log2(count);
             }
         }
+        public LinkedList<treeNode<T>>[] createList()
+        {
+            LinkedList<treeNode<T>>[] mas = new LinkedList<treeNode<T>>[maxLvl];
+            LinkedList<treeNode<T>> list = new LinkedList<treeNode<T>>();
+            list.AddFirst(root);
+            mas[0] = list;
+            for(int i=0;i<mas.Length-1;i++)
+            {
+                LinkedList<treeNode<T>> newList = new LinkedList<treeNode<T>>();
+                foreach(treeNode<T> item in mas[i])
+                {
+                    if(item != null)
+                    {
+                        if(item.left != null)
+                            newList.AddFirst(item.left);
+                        if(item.right != null)
+                            newList.AddFirst(item.right);
+                    }
+                }
+                mas[i + 1] = newList;
+            }
+            return mas;
+        }
     }
 
 }

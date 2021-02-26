@@ -2,6 +2,7 @@ using article4;
 using NUnit.Framework;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace NUnitTestArticle4
 {
@@ -159,6 +160,24 @@ namespace NUnitTestArticle4
                 uint natLvl = (uint)lvl;
                 Assert.AreEqual(natLvl, bt.MaxLvl);
                 Assert.AreEqual(countOfEl, bt.Count);
+            }
+        }
+        [Test]
+        public void TestCreateListForBinaryTree()
+        {
+            for (int j = 0; j < 100; j++)
+            {
+                Random rand = new Random(DateTime.Now.Millisecond);
+                int countOfEl = rand.Next(0, 10000);
+                binaryTree<int> bt = new binaryTree<int>();
+                for (int i = 0; i < countOfEl; i++)
+                {
+                    bt.add(rand.Next(0, 10));
+                }
+                LinkedList<treeNode<int>>[] mas = bt.createList();
+            
+                Assert.AreEqual(countOfEl, bt.Count);
+                Assert.AreEqual(bt.MaxLvl, mas.Length);
             }
         }
     }

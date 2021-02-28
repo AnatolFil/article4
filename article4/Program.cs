@@ -279,6 +279,31 @@ namespace article4
             }
             return mas;
         }
+        public bool checkIsBalanced()
+        {
+            bool res = false;
+            int min = (int)count;
+            int max = 0;
+            findMaxAndMinDepth(root, ref max, ref min, -1);
+            if (max - min == 1 || max - min == 0)
+                res = true;
+            return res;
+        }
+        private void findMaxAndMinDepth(treeNode<T> n,ref int max,ref int min, int lvl)
+        {
+            if(n == null)
+            {
+                if (lvl > max)
+                    max = lvl;
+                else if (lvl < min)
+                    min = lvl;
+                return;
+            }
+            lvl++;
+            findMaxAndMinDepth(n.left, ref max, ref min, lvl);
+            findMaxAndMinDepth(n.right, ref max, ref min, lvl);
+            
+        }
     }
 
 }

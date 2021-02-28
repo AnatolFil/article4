@@ -180,5 +180,29 @@ namespace NUnitTestArticle4
                 Assert.AreEqual(bt.MaxLvl, mas.Length);
             }
         }
+        [Test]
+        public void TestCheckIsBalancedForBinaryTree()
+        {
+            for (int j = 0; j < 100; j++)
+            {
+                Random rand = new Random(DateTime.Now.Millisecond);
+                int countOfEl = rand.Next(0, 10000);
+                binaryTree<int> bt = new binaryTree<int>();
+                for (int i = 0; i < countOfEl; i++)
+                {
+                    bt.add(i);
+                }
+                Assert.AreEqual(false, bt.checkIsBalanced());
+                int[] mas = new int[countOfEl];
+                for (int i = 0; i < countOfEl; i++)
+                {
+                    mas[i] = rand.Next();
+                }
+                Array.Sort(mas);
+                binaryTree<int> BalancedBt = new binaryTree<int>();
+                BalancedBt.buildMinTreeFromMas(mas);
+                Assert.AreEqual(true, BalancedBt.checkIsBalanced());
+            }
+        }
     }
 }

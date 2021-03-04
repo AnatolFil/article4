@@ -302,8 +302,30 @@ namespace article4
             lvl++;
             findMaxAndMinDepth(n.left, ref max, ref min, lvl);
             findMaxAndMinDepth(n.right, ref max, ref min, lvl);
-            
+        }
+        public bool isSeachTree(treeNode<T> n)
+        {
+            bool res = true;
+            if(n != null && n.left != null && n.right != null)
+            {
+                if (n.value.CompareTo(n.left.value) >= 0)
+                {
+                    res = isSeachTree(n.left);
+                    if (res == false)
+                        return res;
+                }
+                else
+                    return false;
+                if (n.value.CompareTo(n.right.value) < 0)
+                {
+                    res = isSeachTree(n.right);
+                    if (res == false)
+                        return res;
+                }
+                else
+                    return false;
+            }
+            return res;
         }
     }
-
 }

@@ -306,26 +306,21 @@ namespace article4
         public bool isSeachTree(treeNode<T> n)
         {
             bool res = true;
-            if(n != null && n.left != null && n.right != null)
+            if(n != null)
             {
-                if (n.value.CompareTo(n.left.value) >= 0)
-                {
-                    res = isSeachTree(n.left);
-                    if (res == false)
-                        return res;
-                }
-                else
-                    return false;
-                if (n.value.CompareTo(n.right.value) < 0)
-                {
-                    res = isSeachTree(n.right);
-                    if (res == false)
-                        return res;
-                }
-                else
-                    return false;
+                res = checkIsBTS(n, default(T), default(T));
             }
             return res;
+        }
+        private bool checkIsBTS(treeNode<T> n, T min, T max)
+        {
+            if (n == null)
+                return true;
+            if ((min.CompareTo(default(T)) != 0 && n.value.CompareTo(min) < 0) || (max.CompareTo(default(T)) != 0 && n.value.CompareTo(max) >= 0))
+                return false;
+            if (checkIsBTS(n.left, min, n.value) && checkIsBTS(n.right, n.value, max))
+                return true;
+            return false;
         }
     }
 }

@@ -207,7 +207,7 @@ namespace NUnitTestArticle4
         [Test]
         public void TestIsSeachTreeForBinaryTree()
         {
-            for (int j = 0; j < 100; j++)
+            for (int j = 0; j < 1000; j++)
             {
                 Random rand = new Random(DateTime.Now.Millisecond);
                 int countOfEl = rand.Next(0, 10000);
@@ -217,10 +217,20 @@ namespace NUnitTestArticle4
                     bt.add(rand.Next());
                 }
                 Assert.AreEqual(true, bt.isSeachTree(bt.root));
-                int tmp = bt.root.left.left.left.right.value;
-                bt.root.left.left.left.right.value = bt.root.left.left.left.left.value;
-                bt.root.left.left.left.left.value = tmp;
-                Assert.AreEqual(false, bt.isSeachTree(bt.root));
+                LinkedList<treeNode<int>>[] mas = bt.createList();
+                bool isFindedLvl = false;
+                while(isFindedLvl != true)
+                {
+                    int randInd = rand.Next(1, mas.Length - 1);
+                    if (mas[randInd].First != null && mas[randInd].First.Next != null && mas[randInd].First.Value.parent == mas[randInd].First.Next.Value.parent)
+                    {
+                        int tmp = mas[randInd].First.Value.value;
+                        mas[randInd].First.Value.value = mas[randInd].First.Next.Value.value;
+                        mas[randInd].First.Next.Value.value = tmp;
+                        isFindedLvl = true;
+                        Assert.AreEqual(false, bt.isSeachTree(bt.root));
+                    }
+                }
             }
         }
     }

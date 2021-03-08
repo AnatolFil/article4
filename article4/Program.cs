@@ -113,6 +113,33 @@ namespace article4
             }
             return res;
         }
+        public Queue<node> orderProjects()
+        {
+            Queue<node> res = new Queue<node>();
+            for(int i=0;i<nodes.Length;i++)
+            {
+                if (nodes[i].visited != true)
+                    buildOrder(res, nodes[i]);
+            }
+            return res;
+        }
+        private void buildOrder(Queue<node> q, node n)
+        {
+            if (n==null)
+            {
+                return;
+            }
+            n.visited = true;
+            if(n.children != null)
+            {
+                for (int i = 0; i < n.children.Length; i++)
+                {
+                    if (n.children[i].visited != true)
+                        buildOrder(q, n.children[i]);
+                }
+            }
+            q.Enqueue(n);
+        }
     }
     public class treeNode<T> where T : IComparable<T>
     {

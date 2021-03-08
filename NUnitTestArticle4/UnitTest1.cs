@@ -233,5 +233,50 @@ namespace NUnitTestArticle4
                 }
             }
         }
+        [Test]
+        public void TestFindNextForBinaryTree()
+        {
+            for (int j = 0; j < 100; j++)
+            {
+                Random rand = new Random(DateTime.Now.Millisecond);
+                int countOfEl = rand.Next(0, 10000);
+                int[] mas = new int[countOfEl];
+                for (int i = 0; i < countOfEl; i++)
+                {
+                    mas[i] = rand.Next();
+                }
+                binaryTree<int> bt = new binaryTree<int>();
+                for (int i = 0; i < countOfEl; i++)
+                {
+                    bt.add(mas[i]);
+                }
+                LinkedList<treeNode<int>>[] Lvlmas = bt.createList();
+                Array.Sort(mas);
+                int randInd = rand.Next(1, Lvlmas.Length - 1);
+                treeNode<int> nextEl = bt.findNext(Lvlmas[randInd].First.Value);
+                if(nextEl != null)
+                {
+                    for(int i=0;i<countOfEl;i++)
+                    {
+                        if(mas[i] == Lvlmas[randInd].First.Value.value  && i+1 < countOfEl)
+                        {
+                            Assert.AreEqual(mas[i+1], nextEl.value);
+                        }
+                    }
+                }
+            }
+        }
+        [Test]
+        public void TestOrderProjectsorGraph()
+        {
+            Queue<node> q = null;
+            q = g1.orderProjects();
+            for (int i = 0; i < g1.nodes.Length; i++)
+            {
+                Assert.AreEqual(true, g1.nodes[i].visited);
+            }
+            Assert.AreEqual(q.Count, g1.nodes.Length);
+            g1.setVisitationFlagToFalse();
+        }
     }
 }

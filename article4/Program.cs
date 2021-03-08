@@ -322,5 +322,32 @@ namespace article4
                 return true;
             return false;
         }
+        public treeNode<T> findNext(treeNode<T> n)
+        {
+            if (n == null)
+                return null;
+            if(n.right != null)
+            {
+                return findTheMostLeft(n.right);
+            }
+            else
+            {
+                treeNode<T> p = n.parent;
+                while(n != null && n != p.left)
+                {
+                    p = p.parent;
+                    n = p;
+                }
+                return p;
+            }
+        }
+        private treeNode<T> findTheMostLeft(treeNode<T> n)
+        {
+            while(n.left != null)
+            {
+                n = n.left;
+            }
+            return n;
+        }
     }
 }

@@ -278,5 +278,55 @@ namespace NUnitTestArticle4
             Assert.AreEqual(q.Count, g1.nodes.Length);
             g1.setVisitationFlagToFalse();
         }
+        [Test]
+        public void TestFindFirtCommonParentForBinaryTree()
+        {
+            for (int j = 0; j < 100; j++)
+            {
+                Random rand = new Random(DateTime.Now.Millisecond);
+                int countOfEl = rand.Next(0, 10000);
+                int[] mas = new int[countOfEl];
+                for (int i = 0; i < countOfEl; i++)
+                {
+                    mas[i] = rand.Next();
+                }
+                binaryTree<int> bt = new binaryTree<int>();
+                for (int i = 0; i < countOfEl; i++)
+                {
+                    bt.add(mas[i]);
+                }
+                LinkedList<treeNode<int>>[] Lvlmas = bt.createList();
+                int randInd1 = rand.Next(1, Lvlmas.Length - 1);
+                int randInd2 = rand.Next(1, Lvlmas.Length - 1);
+                if (Lvlmas[randInd1].First.Value != null && Lvlmas[randInd2].First.Value != null)
+                {
+                    treeNode<int> comPar = bt.findFirtCommonParent(Lvlmas[randInd1].First.Value, Lvlmas[randInd2].First.Value);
+                    Assert.AreEqual(true, comPar != null);    
+                }
+            }
+            int[] mas1 = { 20, 30, 10, 40, 25, 5, 15, 45, 39, 24, 27, 3, 7, 13, 17, 12 };
+            binaryTree<int> bt1 = new binaryTree<int>();
+            for (int i = 0; i < mas1.Length - 1; i++)
+            {
+                bt1.add(mas1[i]);
+            }
+            LinkedList<treeNode<int>>[] Lvlmas1 = bt1.createList();
+            treeNode<int> comPar1 = bt1.findFirtCommonParent(bt1.root.left.right, bt1.root.left.left.left);
+            Assert.AreEqual(10, comPar1.value);
+            comPar1 = bt1.findFirtCommonParent(bt1.root.left.right.right, bt1.root.left.left.left);
+            Assert.AreEqual(10, comPar1.value);
+            comPar1 = bt1.findFirtCommonParent(bt1.root.left.left, bt1.root.left.left.left);
+            Assert.AreEqual(10, comPar1.value);
+            comPar1 = bt1.findFirtCommonParent(bt1.root.left.left, bt1.root.right.right.right);
+            Assert.AreEqual(20, comPar1.value);
+            comPar1 = bt1.findFirtCommonParent(bt1.root.left.left, bt1.root.right.right);
+            Assert.AreEqual(20, comPar1.value);
+            comPar1 = bt1.findFirtCommonParent(bt1.root.left, bt1.root.right.right);
+            Assert.AreEqual(20, comPar1.value);
+            comPar1 = bt1.findFirtCommonParent(bt1.root.left, bt1.root.right);
+            Assert.AreEqual(20, comPar1.value);
+            comPar1 = bt1.findFirtCommonParent(bt1.root.right.left.left, bt1.root.right.right.left);
+            Assert.AreEqual(30, comPar1.value);
+        }
     }
 }

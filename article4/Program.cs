@@ -376,5 +376,56 @@ namespace article4
             }
             return n;
         }
+        private struct resultNodes
+        {
+            public treeNode<T> a;
+            public treeNode<T> b;
+            public treeNode<T> commonParent;
+        }
+        public treeNode<T> findFirtCommonParent(treeNode<T> a, treeNode<T> b)
+        {
+            if (a == b)
+                return a.parent;
+            if (a == null || b == null)
+                return null;
+            resultNodes comParent = new resultNodes();
+            comParent = findFirtParent(a, b, root);
+            return comParent.commonParent;
+        }
+        private resultNodes findFirtParent(treeNode<T> a, treeNode<T> b, treeNode<T> next)
+        {
+            resultNodes res = new resultNodes();
+            if (next == null)
+                return res;
+            if (a == next)
+                res.a = next;
+            if (b == next)
+                res.b = next;
+            resultNodes resLeft = findFirtParent(a, b, next.left);
+            if(resLeft.commonParent == null)
+            {
+                resultNodes resRight = findFirtParent(a, b, next.right);
+                if (resRight.a != null)
+                    res.a = resRight.a;
+                if (resRight.b != null)
+                    res.b = resRight.b;
+                if (resRight.commonParent != null)
+                    res.commonParent = resRight.commonParent;
+            }
+            if (resLeft.a != null)
+                res.a = resLeft.a;
+            if (resLeft.b != null)
+                res.b = resLeft.b;
+            if (resLeft.commonParent != null)
+                res.commonParent = resLeft.commonParent;
+            if (res.a != null && res.b != null && res.commonParent == null)
+            {
+                if (res.a == next || res.b == next)
+                    res.commonParent = next.parent;
+                else
+                    res.commonParent = next;
+            }
+            return res; 
+        }
     }
 }

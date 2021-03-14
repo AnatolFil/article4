@@ -316,7 +316,7 @@ namespace NUnitTestArticle4
             comPar1 = bt1.findFirtCommonParent(bt1.root.left.right.right, bt1.root.left.left.left);
             Assert.AreEqual(10, comPar1.value);
             comPar1 = bt1.findFirtCommonParent(bt1.root.left.left, bt1.root.left.left.left);
-            Assert.AreEqual(10, comPar1.value);
+            Assert.AreEqual(5, comPar1.value);
             comPar1 = bt1.findFirtCommonParent(bt1.root.left.left, bt1.root.right.right.right);
             Assert.AreEqual(20, comPar1.value);
             comPar1 = bt1.findFirtCommonParent(bt1.root.left.left, bt1.root.right.right);
@@ -326,6 +326,32 @@ namespace NUnitTestArticle4
             comPar1 = bt1.findFirtCommonParent(bt1.root.left, bt1.root.right);
             Assert.AreEqual(20, comPar1.value);
             comPar1 = bt1.findFirtCommonParent(bt1.root.right.left.left, bt1.root.right.right.left);
+            Assert.AreEqual(30, comPar1.value);
+        }
+        [Test]
+        public void TestFindFistCommonParentWithoutParentForBinaryTree()
+        {
+            int[] mas1 = { 20, 30, 10, 40, 25, 5, 15, 45, 39, 24, 27, 3, 7, 13, 17, 12 };
+            binaryTree<int> bt1 = new binaryTree<int>();
+            for (int i = 0; i < mas1.Length - 1; i++)
+            {
+                bt1.add(mas1[i]);
+            }
+            treeNode<int> comPar1 = bt1.findFistCommonParentWithoutParent(bt1.root.left.right, bt1.root.left.left.left);
+            Assert.AreEqual(10, comPar1.value);
+            comPar1 = bt1.findFistCommonParentWithoutParent(bt1.root.left.right.right, bt1.root.left.left.left);
+            Assert.AreEqual(10, comPar1.value);
+            comPar1 = bt1.findFistCommonParentWithoutParent(bt1.root.left.left, bt1.root.left.left.left);
+            Assert.AreEqual(5, comPar1.value);
+            comPar1 = bt1.findFistCommonParentWithoutParent(bt1.root.left.left, bt1.root.right.right.right);
+            Assert.AreEqual(20, comPar1.value);
+            comPar1 = bt1.findFistCommonParentWithoutParent(bt1.root.left.left, bt1.root.right.right);
+            Assert.AreEqual(20, comPar1.value);
+            comPar1 = bt1.findFistCommonParentWithoutParent(bt1.root.left, bt1.root.right.right);
+            Assert.AreEqual(20, comPar1.value);
+            comPar1 = bt1.findFistCommonParentWithoutParent(bt1.root.left, bt1.root.right);
+            Assert.AreEqual(20, comPar1.value);
+            comPar1 = bt1.findFistCommonParentWithoutParent(bt1.root.right.left.left, bt1.root.right.right.left);
             Assert.AreEqual(30, comPar1.value);
         }
     }

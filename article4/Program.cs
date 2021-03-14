@@ -161,7 +161,7 @@ namespace article4
             comparer = defaultComparer;
         }
     }
-    public class binaryTree <T> where T : IComparable<T>
+    public class binaryTree<T> where T : IComparable<T>
     {
         public treeNode<T> root;
         private uint count;
@@ -182,7 +182,7 @@ namespace article4
         public void add(T element)
         {
             uint lvl = 0;
-            if(root == null)
+            if (root == null)
             {
                 root = new treeNode<T>();
                 root.value = element;
@@ -216,11 +216,11 @@ namespace article4
             //}
             if (start > end)
                 return;
-            int mid = (end + start)/2;
+            int mid = (end + start) / 2;
             add(mas[mid]);
             buildMinTreeFromMas(mas, start, mid - 1);
-            
-            buildMinTreeFromMas(mas, mid+1, end);
+
+            buildMinTreeFromMas(mas, mid + 1, end);
         }
         private uint addTo(treeNode<T> node, T element, uint startLvl = 0)
         {
@@ -271,7 +271,7 @@ namespace article4
         }
         public void buildMinTreeFromMas(T[] mas)
         {
-            if(mas.Length > 0 && root == null)
+            if (mas.Length > 0 && root == null)
             {
                 root = new treeNode<T>();
                 root.parent = null;
@@ -289,16 +289,16 @@ namespace article4
             LinkedList<treeNode<T>> list = new LinkedList<treeNode<T>>();
             list.AddFirst(root);
             mas[0] = list;
-            for(int i=0;i<mas.Length-1;i++)
+            for (int i = 0; i < mas.Length - 1; i++)
             {
                 LinkedList<treeNode<T>> newList = new LinkedList<treeNode<T>>();
-                foreach(treeNode<T> item in mas[i])
+                foreach (treeNode<T> item in mas[i])
                 {
-                    if(item != null)
+                    if (item != null)
                     {
-                        if(item.left != null)
+                        if (item.left != null)
                             newList.AddFirst(item.left);
-                        if(item.right != null)
+                        if (item.right != null)
                             newList.AddFirst(item.right);
                     }
                 }
@@ -316,9 +316,9 @@ namespace article4
                 res = true;
             return res;
         }
-        private void findMaxAndMinDepth(treeNode<T> n,ref int max,ref int min, int lvl)
+        private void findMaxAndMinDepth(treeNode<T> n, ref int max, ref int min, int lvl)
         {
-            if(n == null)
+            if (n == null)
             {
                 if (lvl > max)
                     max = lvl;
@@ -333,7 +333,7 @@ namespace article4
         public bool isSeachTree(treeNode<T> n)
         {
             bool res = true;
-            if(n != null)
+            if (n != null)
             {
                 res = checkIsBTS(n, default(T), default(T));
             }
@@ -353,14 +353,14 @@ namespace article4
         {
             if (n == null)
                 return null;
-            if(n.right != null)
+            if (n.right != null)
             {
                 return findTheMostLeft(n.right);
             }
             else
             {
                 treeNode<T> p = n.parent;
-                while(n != null && n != p.left)
+                while (n != null && n != p.left)
                 {
                     p = p.parent;
                     n = p;
@@ -370,7 +370,7 @@ namespace article4
         }
         private treeNode<T> findTheMostLeft(treeNode<T> n)
         {
-            while(n.left != null)
+            while (n.left != null)
             {
                 n = n.left;
             }
@@ -402,7 +402,7 @@ namespace article4
             if (b == next)
                 res.b = next;
             resultNodes resLeft = findFirtParent(a, b, next.left);
-            if(resLeft.commonParent == null)
+            if (resLeft.commonParent == null)
             {
                 resultNodes resRight = findFirtParent(a, b, next.right);
                 if (resRight.a != null)
@@ -420,12 +420,45 @@ namespace article4
                 res.commonParent = resLeft.commonParent;
             if (res.a != null && res.b != null && res.commonParent == null)
             {
-                if (res.a == next || res.b == next)
-                    res.commonParent = next.parent;
-                else
-                    res.commonParent = next;
+                res.commonParent = next;
             }
-            return res; 
+            return res;
+        }
+
+        public treeNode<T> findFistCommonParentWithoutParent(treeNode<T> a, treeNode<T> b)
+        {
+            int depthA = depth(a);
+            int depthB = depth(b);
+            treeNode<T> first = depthA < depthB ? a : b;
+            treeNode<T> second = depthA < depthB ? b : a;
+            second = goUP(second, Math.Abs(depthA - depthB));
+            while (first != null && second != null && first != second)
+            {
+                first = first.parent;
+                second = second.parent;
+            }
+            return first == null || second == null ? null : first;
+        }
+        private int depth(treeNode<T> a)
+        {
+            int depth = 0;
+            treeNode<T> current = a;
+            while (current != null)
+            {
+                current = current.parent;
+                depth++;
+            }
+            return depth;
+        }
+        private treeNode<T> goUP(treeNode<T> a, int lvl)
+        {
+            treeNode<T> current = a;
+            while (lvl != 0)
+            {
+                current = current.parent;
+                lvl--;
+            }
+            return current;
         }
     }
 }

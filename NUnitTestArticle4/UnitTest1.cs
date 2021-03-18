@@ -353,6 +353,7 @@ namespace NUnitTestArticle4
             Assert.AreEqual(20, comPar1.value);
             comPar1 = bt1.findFistCommonParentWithoutParent(bt1.root.right.left.left, bt1.root.right.right.left);
             Assert.AreEqual(30, comPar1.value);
+            
         }
     }
 }

@@ -460,5 +460,41 @@ namespace article4
             }
             return current;
         }
+        private int[,] generateTransposition(int[] elements)
+        {
+            if (elements == null || elements.Length < 1)
+                return null;
+            int countOfTrans = factorial(elements.Length);
+            int lenghtOfElements = elements.Length;
+            int[,]  res = new int[countOfTrans,lenghtOfElements];
+            
+            return res;
+        }
+        private int factorial(int n)
+        {
+            int res = 1;
+            for(int i=2;i<=n;i++)
+            {
+                res = res * i;
+            }
+            return res;
+        }
+        private int [] insertIntoMas(int [] mas, int el, int pos)
+        {
+            if (mas == null || mas.Length < 1 || pos > mas.Length || pos < 0)
+                return null;
+            int[] res = new int[mas.Length + 1];
+            mas.CopyTo(res, 0);
+            for(int i=mas.Length-1;i>=0;i++)
+            {
+                if(i == pos)
+                {
+                    res[i + 1] = res[i];
+                    res[i] = el;
+                }
+                res[i + 1] = res[i];
+            }
+            return res;
+        }
     }
 }

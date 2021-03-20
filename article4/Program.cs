@@ -460,14 +460,38 @@ namespace article4
             }
             return current;
         }
-        private int[,] generateTransposition(int[] elements)
+        private int[][] generateTransposition(int[] elements)
         {
             if (elements == null || elements.Length < 1)
                 return null;
             int countOfTrans = factorial(elements.Length);
             int lenghtOfElements = elements.Length;
-            int[,]  res = new int[countOfTrans,lenghtOfElements];
-            
+            int[][] res = new int[countOfTrans][];
+            int curMas = 0;
+            int nextFreeMas = elements.Length;
+            int countOfMas = elements.Length;
+            for (int i = 0; i < elements.Length; i++)
+            {
+                res[i]= new int[lenghtOfElements];
+                res[i][i] = elements[i];
+            }
+            int countOfElement = 1;
+            for (int i=0;i<elements.Length;i++)
+            {
+                for(int k=0;k<countOfMas;k++)
+                {
+                    int[] tmpMas = res[k];
+                    if (!contains(tmpMas, elements[i]))
+                    {
+                        res[k] = insertIntoMas(tmpMas, elements[i], 0);
+                        for (int j = 0; j <= countOfElement; j++)
+                        {
+                            res[curMas] = insertIntoMas(res[curMas], elements[i], j);
+                        }
+                    }
+
+                }
+            }
             return res;
         }
         private int factorial(int n)
@@ -493,6 +517,19 @@ namespace article4
                     res[i] = el;
                 }
                 res[i + 1] = res[i];
+            }
+            return res;
+        }
+        private bool contains(int[] mas,int el)
+        {
+            bool res = false;
+            for(int i=0;i<mas.Length;i++)
+            {
+                if(mas[i] == el)
+                {
+                    res = true;
+                    break;
+                }
             }
             return res;
         }

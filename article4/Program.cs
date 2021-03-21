@@ -460,7 +460,7 @@ namespace article4
             }
             return current;
         }
-        private int[][] generateTransposition(int[] elements)
+        public int[][] generateTransposition(int[] elements)
         {
             if (elements == null || elements.Length < 1)
                 return null;
@@ -473,24 +473,29 @@ namespace article4
             for (int i = 0; i < elements.Length; i++)
             {
                 res[i]= new int[lenghtOfElements];
-                res[i][i] = elements[i];
+                res[i][0] = elements[i];
             }
-            int countOfElement = 1;
             for (int i=0;i<elements.Length;i++)
             {
-                for(int k=0;k<countOfMas;k++)
+                int countOfAddedEl = 0;
+                for(int k=0;k<countOfMas && k < res.Length && countOfMas <= countOfTrans; k++)
                 {
                     int[] tmpMas = res[k];
                     if (!contains(tmpMas, elements[i]))
                     {
                         res[k] = insertIntoMas(tmpMas, elements[i], 0);
-                        for (int j = 0; j <= countOfElement; j++)
+                        //int bound = i + 1;
+                        //if (k == i - 1)
+                        //    bound = i;
+                        for (int j = 1; j <= i + 1 && j < tmpMas.Length; j++)
                         {
-                            res[curMas] = insertIntoMas(res[curMas], elements[i], j);
+                            res[nextFreeMas] = insertIntoMas(tmpMas, elements[i], j);
+                            nextFreeMas++;
+                            countOfAddedEl++;
                         }
                     }
-
                 }
+                countOfMas += countOfAddedEl;
             }
             return res;
         }
@@ -507,14 +512,20 @@ namespace article4
         {
             if (mas == null || mas.Length < 1 || pos > mas.Length || pos < 0)
                 return null;
-            int[] res = new int[mas.Length + 1];
+            int[] res = new int[mas.Length];
             mas.CopyTo(res, 0);
-            for(int i=mas.Length-1;i>=0;i++)
+            if (mas.Length-1 == pos)
+            {
+                res[mas.Length - 1] = el;
+                return res;
+            }
+            for (int i=mas.Length-2;i>=0;i--)
             {
                 if(i == pos)
                 {
                     res[i + 1] = res[i];
                     res[i] = el;
+                    break;
                 }
                 res[i + 1] = res[i];
             }

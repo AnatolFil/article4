@@ -467,7 +467,8 @@ namespace article4
             int countOfTrans = factorial(elements.Length);
             int lenghtOfElements = elements.Length;
             int[][] res = new int[countOfTrans][];
-            int curMas = 0;
+            Stack<int> clearPlaces = new Stack<int>();
+            //int clearPlace = -1;
             int nextFreeMas = elements.Length;
             int countOfMas = elements.Length;
             for (int i = 0; i < elements.Length; i++)
@@ -481,17 +482,30 @@ namespace article4
                 for(int k=0;k<countOfMas && k < res.Length && countOfMas <= countOfTrans; k++)
                 {
                     int[] tmpMas = res[k];
-                    if (!contains(tmpMas, elements[i]))
+                    if(tmpMas != null && countNotNullElementsInMas(tmpMas) < elements.Length)
                     {
-                        res[k] = insertIntoMas(tmpMas, elements[i], 0);
-                        //int bound = i + 1;
-                        //if (k == i - 1)
-                        //    bound = i;
-                        for (int j = 1; j <= i + 1 && j < tmpMas.Length; j++)
+                        if (!contains(tmpMas, elements[i]))
                         {
-                            res[nextFreeMas] = insertIntoMas(tmpMas, elements[i], j);
-                            nextFreeMas++;
-                            countOfAddedEl++;
+                            res[k] = insertIntoMas(tmpMas, elements[i], 0);
+                            int masLenght = countNotNullElementsInMas(tmpMas);
+                            for (int j = 1; j <= masLenght; j++)
+                            {
+                                if (clearPlaces.Count > 0)
+                                {
+                                    res[clearPlaces.Pop()] = insertIntoMas(tmpMas, elements[i], j);
+                                }
+                                else
+                                {
+                                    res[nextFreeMas] = insertIntoMas(tmpMas, elements[i], j);
+                                    nextFreeMas++;
+                                    countOfAddedEl++;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            res[k] = null;
+                            clearPlaces.Push(k);
                         }
                     }
                 }
@@ -541,6 +555,16 @@ namespace article4
                     res = true;
                     break;
                 }
+            }
+            return res;
+        }
+        private int countNotNullElementsInMas(int[] mas)
+        {
+            int res = 0;
+            for(int i=0;i<mas.Length;i++)
+            {
+                if (mas[i] != 0)
+                    res++;
             }
             return res;
         }

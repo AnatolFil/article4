@@ -357,7 +357,7 @@ namespace NUnitTestArticle4
         [Test]
         public void TestGenerateTranspositionForBinaryTree()
         {
-            int[] mas1 = { 20, 30, 10, 40};
+            int[] mas1 = { 20, 30, 10, 40, 50, 12, 34, 76, 7766, 78, 6767};
             binaryTree<int> bt1 = new binaryTree<int>();
             int[][] traspositions = bt1.generateTransposition(mas1);
             

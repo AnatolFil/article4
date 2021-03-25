@@ -460,6 +460,22 @@ namespace article4
             }
             return current;
         }
+        private void getAllVariatOfTree()
+        {
+            Queue<treeNode<T>> n = new Queue<treeNode<T>>();
+            n.Enqueue(root);
+            while(n.Count>0)
+            {
+                treeNode<T> tmp = n.Dequeue();
+                if(tmp != null)
+                {
+                    if (tmp.left != null)
+                        n.Enqueue(tmp.left);
+                    if (tmp.right != null)
+                        n.Enqueue(tmp.right);
+                }
+            }
+        }
         public int[][] generateTransposition(int[] elements)
         {
             if (elements == null || elements.Length < 1)
@@ -513,7 +529,7 @@ namespace article4
             }
             return res;
         }
-        private int factorial(int n)
+        public int factorial(int n)
         {
             int res = 1;
             for(int i=2;i<=n;i++)

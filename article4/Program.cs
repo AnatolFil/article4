@@ -460,21 +460,26 @@ namespace article4
             }
             return current;
         }
-        private void getAllVariatOfTree()
+        private List<List<treeNode<T>>> getAllVariatOfTree(treeNode<T> node)
         {
-            Queue<treeNode<T>> n = new Queue<treeNode<T>>();
-            n.Enqueue(root);
-            while(n.Count>0)
+            List<List<treeNode<T>>> res = new List<List<treeNode<T>>>();
+            if(node == null)
             {
-                treeNode<T> tmp = n.Dequeue();
-                if(tmp != null)
+                res.Add( new List<treeNode<T>>());
+                return res;
+            }
+            List<T> prefix = new List<T>();
+            prefix.Add(node.value);
+            List<List<treeNode<T>>> lSeq = getAllVariatOfTree(node.left);
+            List<List<treeNode<T>>> rSeq = getAllVariatOfTree(node.right);
+            foreach(List<treeNode<T>> left in lSeq)
+            {
+                foreach (List<treeNode<T>> right in rSeq)
                 {
-                    if (tmp.left != null)
-                        n.Enqueue(tmp.left);
-                    if (tmp.right != null)
-                        n.Enqueue(tmp.right);
+
                 }
             }
+            return res;
         }
         public int[][] generateTransposition(int[] elements)
         {

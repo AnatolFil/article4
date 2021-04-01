@@ -357,10 +357,22 @@ namespace NUnitTestArticle4
         [Test]
         public void TestGenerateTranspositionForBinaryTree()
         {
-            int[] mas1 = { 20, 30, 10, 40};
+            int[] mas1 = { 20, 30, 10, 40, 25, 5, 15, 45, 39, 7, 13 };
             binaryTree<int> bt1 = new binaryTree<int>();
             int[][] traspositions = bt1.generateTransposition(mas1);
             Assert.AreEqual(24, traspositions.Length);
+        }
+        [Test]
+        public void TestGetAllVariatOfTreeForBinaryTree()
+        {
+            int[] mas1 = { 20, 30, 10, 40, 25, 5, 15, 45, 39, 24, 27, 3, 7, 13 };
+            binaryTree<int> bt1 = new binaryTree<int>();
+            for (int i = 0; i < mas1.Length; i++)
+            {
+                bt1.add(mas1[i]);
+            }
+            List<List<int>> res = bt1.getAllVariatOfTree(bt1.root);
+            //Assert.AreEqual(24, traspositions.Length);
         }
     }
 }

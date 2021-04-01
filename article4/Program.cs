@@ -460,26 +460,59 @@ namespace article4
             }
             return current;
         }
-        private List<List<treeNode<T>>> getAllVariatOfTree(treeNode<T> node)
+        public List<List<T>> getAllVariatOfTree(treeNode<T> node)
         {
-            List<List<treeNode<T>>> res = new List<List<treeNode<T>>>();
+            List<List<T>> res = new List<List<T>>();
             if(node == null)
             {
-                res.Add( new List<treeNode<T>>());
+                res.Add( new List<T>());
                 return res;
             }
             List<T> prefix = new List<T>();
             prefix.Add(node.value);
-            List<List<treeNode<T>>> lSeq = getAllVariatOfTree(node.left);
-            List<List<treeNode<T>>> rSeq = getAllVariatOfTree(node.right);
-            foreach(List<treeNode<T>> left in lSeq)
+            List<List<T>> lSeq = getAllVariatOfTree(node.left);
+            List<List<T>> rSeq = getAllVariatOfTree(node.right);
+            foreach(List<T> left in lSeq)
             {
-                foreach (List<treeNode<T>> right in rSeq)
+                foreach (List<T> right in rSeq)
                 {
-
+                    weaved(left, right, res, prefix);
                 }
             }
             return res;
+        }
+        private void weaved(List<T> left, List<T> right, List<List<T>> results, List<T> prefix)
+        {
+            if(left.Count < 1 || right.Count < 1)
+            {
+                List<T> result = new List<T>();
+                copyToList(prefix, result);
+                result.AddRange(left);
+                result.AddRange(right);
+                results.Add(result);
+                return;
+            }
+            T el = left[0];
+            left.RemoveAt(0);
+            prefix.Add(el);
+            weaved(left, right, results, prefix);
+            left.Insert(0, el);
+            prefix.RemoveAt(prefix.Count - 1);
+
+            el = right[0];
+            right.RemoveAt(0);
+            prefix.Add(el);
+            weaved(left, right, results, prefix);
+            right.Insert(0, el);
+            prefix.RemoveAt(prefix.Count - 1);
+        }
+        private void copyToList(List<T> source, List<T> desination)
+        {
+            foreach(T item in source)
+            {
+                T el = item;
+                desination.Add(el);
+            }
         }
         public int[][] generateTransposition(int[] elements)
         {

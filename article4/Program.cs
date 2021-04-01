@@ -481,6 +481,7 @@ namespace article4
             }
             return res;
         }
+        //Generate all possible permutations
         private void weaved(List<T> left, List<T> right, List<List<T>> results, List<T> prefix)
         {
             if(left.Count < 1 || right.Count < 1)

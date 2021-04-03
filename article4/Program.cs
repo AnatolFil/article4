@@ -623,5 +623,29 @@ namespace article4
             }
             return res;
         }
+        public void treeToMas(treeNode<T> node, T[] mas, ref int i)
+        {
+            if (node == null)
+                return;
+            treeToMas(node.left, mas, ref i);
+            i++;
+            mas[i] = node.value;
+            treeToMas(node.right, mas, ref i);
+        }
+        //public bool Contains(treeNode<T> cur, treeNode<T> exp)
+        //{
+        //    bool res = false;
+        //    if (exp == null)
+        //        return true;
+        //    if(cur == exp)
+        //    {
+        //        res = Contains(cur.left, exp.left) && Contains(cur.right, exp.right);
+        //    }
+        //    else
+        //    {
+        //        res = Contains(cur.left, exp) && Contains(cur.right, exp);
+        //    }
+        //    return res;
+        //}
     }
 }

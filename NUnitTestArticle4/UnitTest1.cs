@@ -374,5 +374,19 @@ namespace NUnitTestArticle4
             List<List<int>> res = bt1.getAllVariatOfTree(bt1.root);
             //Assert.AreEqual(24, traspositions.Length);
         }
+        [Test]
+        public void TestTreeToMasForBinaryTree()
+        {
+            int[] mas1 = { 20, 30, 10, 40, 25, 5, 15, 45, 39, 24, 27, 3, 7, 13 };
+            binaryTree<int> bt1 = new binaryTree<int>();
+            for (int i = 0; i < mas1.Length; i++)
+            {
+                bt1.add(mas1[i]);
+            }
+            int[] mas = new int[mas1.Length];
+            int ind = -1;
+            bt1.treeToMas(bt1.root, mas, ref ind);
+            //Assert.AreEqual(24, traspositions.Length);
+        }
     }
 }

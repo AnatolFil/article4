@@ -632,20 +632,31 @@ namespace article4
             mas[i] = node.value;
             treeToMas(node.right, mas, ref i);
         }
-        //public bool Contains(treeNode<T> cur, treeNode<T> exp)
-        //{
-        //    bool res = false;
-        //    if (exp == null)
-        //        return true;
-        //    if(cur == exp)
-        //    {
-        //        res = Contains(cur.left, exp.left) && Contains(cur.right, exp.right);
-        //    }
-        //    else
-        //    {
-        //        res = Contains(cur.left, exp) && Contains(cur.right, exp);
-        //    }
-        //    return res;
-        //}
+        private bool checkMas(treeNode<T> node, T[] mas, ref int i)
+        {
+            if (node == null && i < mas.Length-1)
+                return false;
+            if (i == mas.Length - 1)
+                return true;
+            bool res = checkMas(node.left, mas, ref i);
+            if (res != true)
+            {
+                i++;
+                if (i < mas.Length && mas[i].CompareTo(node.value) != 0)
+                    i = -1;
+                return checkMas(node.right, mas, ref i);
+            }
+            return res;
+        }
+        public bool Contains(treeNode<T> node, int count)
+        {
+            bool res = false;
+            int i = -1;
+            T[] mas = new T[count];
+            treeToMas(node, mas, ref i);
+            i = -1;
+            res = checkMas(root, mas, ref i);
+            return res;
+        }
     }
 }

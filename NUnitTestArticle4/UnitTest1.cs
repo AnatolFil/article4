@@ -388,5 +388,32 @@ namespace NUnitTestArticle4
             bt1.treeToMas(bt1.root, mas, ref ind);
             //Assert.AreEqual(24, traspositions.Length);
         }
+        [Test]
+        public void TestContainsForBinaryTree()
+        {
+            int[] mas1 = { 20, 30, 10, 40, 25, 5, 15, 45, 39, 24, 27, 3, 7, 13 };
+            binaryTree<int> bt1 = new binaryTree<int>();
+            binaryTree<int> bt2 = new binaryTree<int>();
+            for (int i = 0; i < mas1.Length; i++)
+            {
+                bt1.add(mas1[i]);
+                if(i>mas1.Length/2)
+                    bt2.add(mas1[i]);
+            }
+            bool res = bt1.Contains(bt1.root.right.left, 3);
+            Assert.AreEqual(true, res);
+            res = bt1.Contains(bt2.root, (int)bt2.Count);
+            Assert.AreEqual(false, res);
+            res = bt1.Contains(bt1.root.right.right, 3);
+            Assert.AreEqual(true, res);
+            res = bt1.Contains(bt1.root, 14);
+            Assert.AreEqual(true, res);
+            res = bt1.Contains(bt1.root.left, 6);
+            Assert.AreEqual(true, res);
+            res = bt1.Contains(bt1.root.left.left.left, 1);
+            Assert.AreEqual(true, res);
+            res = bt1.Contains(bt1.root.left.right, 2);
+            Assert.AreEqual(true, res);
+        }
     }
 }

@@ -385,7 +385,7 @@ namespace NUnitTestArticle4
             }
             int[] mas = new int[mas1.Length];
             int ind = -1;
-            bt1.treeToMas(bt1.root, mas, ref ind);
+            bt1.treeToMas(bt1.root, ref mas, ref ind);
             //Assert.AreEqual(24, traspositions.Length);
         }
         [Test]
@@ -400,19 +400,19 @@ namespace NUnitTestArticle4
                 if(i>mas1.Length/2)
                     bt2.add(mas1[i]);
             }
-            bool res = bt1.Contains(bt1.root.right.left, 3);
+            bool res = bt1.Contains(bt1.root.right.left);
             Assert.AreEqual(true, res);
-            res = bt1.Contains(bt2.root, (int)bt2.Count);
+            res = bt1.Contains(bt2.root);
             Assert.AreEqual(false, res);
-            res = bt1.Contains(bt1.root.right.right, 3);
+            res = bt1.Contains(bt1.root.right.right);
             Assert.AreEqual(true, res);
-            res = bt1.Contains(bt1.root, 14);
+            res = bt1.Contains(bt1.root);
             Assert.AreEqual(true, res);
-            res = bt1.Contains(bt1.root.left, 6);
+            res = bt1.Contains(bt1.root.left);
             Assert.AreEqual(true, res);
-            res = bt1.Contains(bt1.root.left.left.left, 1);
+            res = bt1.Contains(bt1.root.left.left.left);
             Assert.AreEqual(true, res);
-            res = bt1.Contains(bt1.root.left.right, 2);
+            res = bt1.Contains(bt1.root.left.right);
             Assert.AreEqual(true, res);
         }
     }

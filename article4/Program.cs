@@ -623,37 +623,57 @@ namespace article4
             }
             return res;
         }
-        public void treeToMas(treeNode<T> node, T[] mas, ref int i)
+        public void treeToMas(treeNode<T> node, ref T[] mas, ref int i)
         {
-            if (node == null)
-                return;
-            treeToMas(node.left, mas, ref i);
             i++;
-            mas[i] = node.value;
-            treeToMas(node.right, mas, ref i);
+            if (node == null)
+            {
+                safeCopyToMas(ref mas, default(T), i);
+                return;
+            }    
+            safeCopyToMas(ref mas, node.value, i);
+            treeToMas(node.left, ref mas, ref i);
+            treeToMas(node.right, ref mas, ref i);
         }
         private bool checkMas(treeNode<T> node, T[] mas, ref int i)
         {
-            if (node == null && i < mas.Length-1)
-                return false;
-            if (i == mas.Length - 1)
+            if (i >= mas.Length-1)
                 return true;
-            bool res = checkMas(node.left, mas, ref i);
-            if (res != true)
+            i++;
+            if (node == null)
             {
-                i++;
-                if (i < mas.Length && mas[i].CompareTo(node.value) != 0)
+                if (mas[i].CompareTo(default(T)) != 0)
                     i = -1;
+                return i >= mas.Length-1 ? true : false;
+            }
+            if (mas[i].CompareTo(node.value) != 0)
+                i = -1;
+            if (checkMas(node.left, mas, ref i) != true)
+            {
                 return checkMas(node.right, mas, ref i);
             }
-            return res;
+            return i >= mas.Length-1 ? true:false;
         }
-        public bool Contains(treeNode<T> node, int count)
+        private void safeCopyToMas(ref T[] mas, T value, int ind)
+        {
+            if(ind < mas.Length)
+            {
+                mas[ind] = value;
+            }
+            else
+            {
+                T[] newMas = new T[mas.Length + 1];
+                mas.CopyTo(newMas, 0); 
+                newMas[ind] = value;
+                mas = newMas;
+            }
+        }
+        public bool Contains(treeNode<T> node)
         {
             bool res = false;
             int i = -1;
-            T[] mas = new T[count];
-            treeToMas(node, mas, ref i);
+            T[] mas = new T[1];
+            treeToMas(node, ref mas, ref i);
             i = -1;
             res = checkMas(root, mas, ref i);
             return res;

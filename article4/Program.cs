@@ -116,7 +116,7 @@ namespace article4
         public Queue<node> orderProjects()
         {
             Queue<node> res = new Queue<node>();
-            for(int i=0;i<nodes.Length;i++)
+            for (int i = 0; i < nodes.Length; i++)
             {
                 if (nodes[i].visited != true)
                     buildOrder(res, nodes[i]);
@@ -125,12 +125,12 @@ namespace article4
         }
         private void buildOrder(Queue<node> q, node n)
         {
-            if (n==null)
+            if (n == null)
             {
                 return;
             }
             n.visited = true;
-            if(n.children != null)
+            if (n.children != null)
             {
                 for (int i = 0; i < n.children.Length; i++)
                 {
@@ -463,16 +463,16 @@ namespace article4
         public List<List<T>> getAllVariatOfTree(treeNode<T> node)
         {
             List<List<T>> res = new List<List<T>>();
-            if(node == null)
+            if (node == null)
             {
-                res.Add( new List<T>());
+                res.Add(new List<T>());
                 return res;
             }
             List<T> prefix = new List<T>();
             prefix.Add(node.value);
             List<List<T>> lSeq = getAllVariatOfTree(node.left);
             List<List<T>> rSeq = getAllVariatOfTree(node.right);
-            foreach(List<T> left in lSeq)
+            foreach (List<T> left in lSeq)
             {
                 foreach (List<T> right in rSeq)
                 {
@@ -484,7 +484,7 @@ namespace article4
         //Generate all possible permutations
         private void weaved(List<T> left, List<T> right, List<List<T>> results, List<T> prefix)
         {
-            if(left.Count < 1 || right.Count < 1)
+            if (left.Count < 1 || right.Count < 1)
             {
                 List<T> result = new List<T>();
                 copyToList(prefix, result);
@@ -509,7 +509,7 @@ namespace article4
         }
         private void copyToList(List<T> source, List<T> desination)
         {
-            foreach(T item in source)
+            foreach (T item in source)
             {
                 T el = item;
                 desination.Add(el);
@@ -528,16 +528,16 @@ namespace article4
             int countOfMas = elements.Length;
             for (int i = 0; i < elements.Length; i++)
             {
-                res[i]= new int[lenghtOfElements];
+                res[i] = new int[lenghtOfElements];
                 res[i][0] = elements[i];
             }
-            for (int i=0;i<elements.Length;i++)
+            for (int i = 0; i < elements.Length; i++)
             {
                 int countOfAddedEl = 0;
-                for(int k=0;k<countOfMas && k < res.Length && countOfMas <= countOfTrans; k++)
+                for (int k = 0; k < countOfMas && k < res.Length && countOfMas <= countOfTrans; k++)
                 {
                     int[] tmpMas = res[k];
-                    if(tmpMas != null && countNotNullElementsInMas(tmpMas) < elements.Length)
+                    if (tmpMas != null && countNotNullElementsInMas(tmpMas) < elements.Length)
                     {
                         if (!contains(tmpMas, elements[i]))
                         {
@@ -571,26 +571,26 @@ namespace article4
         public int factorial(int n)
         {
             int res = 1;
-            for(int i=2;i<=n;i++)
+            for (int i = 2; i <= n; i++)
             {
                 res = res * i;
             }
             return res;
         }
-        private int [] insertIntoMas(int [] mas, int el, int pos)
+        private int[] insertIntoMas(int[] mas, int el, int pos)
         {
             if (mas == null || mas.Length < 1 || pos > mas.Length || pos < 0)
                 return null;
             int[] res = new int[mas.Length];
             mas.CopyTo(res, 0);
-            if (mas.Length-1 == pos)
+            if (mas.Length - 1 == pos)
             {
                 res[mas.Length - 1] = el;
                 return res;
             }
-            for (int i=mas.Length-2;i>=0;i--)
+            for (int i = mas.Length - 2; i >= 0; i--)
             {
-                if(i == pos)
+                if (i == pos)
                 {
                     res[i + 1] = res[i];
                     res[i] = el;
@@ -600,12 +600,12 @@ namespace article4
             }
             return res;
         }
-        private bool contains(int[] mas,int el)
+        private bool contains(int[] mas, int el)
         {
             bool res = false;
-            for(int i=0;i<mas.Length;i++)
+            for (int i = 0; i < mas.Length; i++)
             {
-                if(mas[i] == el)
+                if (mas[i] == el)
                 {
                     res = true;
                     break;
@@ -616,7 +616,7 @@ namespace article4
         private int countNotNullElementsInMas(int[] mas)
         {
             int res = 0;
-            for(int i=0;i<mas.Length;i++)
+            for (int i = 0; i < mas.Length; i++)
             {
                 if (mas[i] != 0)
                     res++;
@@ -630,21 +630,21 @@ namespace article4
             {
                 safeCopyToMas(ref mas, default(T), i);
                 return;
-            }    
+            }
             safeCopyToMas(ref mas, node.value, i);
             treeToMas(node.left, ref mas, ref i);
             treeToMas(node.right, ref mas, ref i);
         }
         private bool checkMas(treeNode<T> node, T[] mas, ref int i)
         {
-            if (i >= mas.Length-1)
+            if (i >= mas.Length - 1)
                 return true;
             i++;
             if (node == null)
             {
                 if (mas[i].CompareTo(default(T)) != 0)
                     i = -1;
-                return i >= mas.Length-1 ? true : false;
+                return i >= mas.Length - 1 ? true : false;
             }
             if (mas[i].CompareTo(node.value) != 0)
                 i = -1;
@@ -652,18 +652,18 @@ namespace article4
             {
                 return checkMas(node.right, mas, ref i);
             }
-            return i >= mas.Length-1 ? true:false;
+            return i >= mas.Length - 1 ? true : false;
         }
         private void safeCopyToMas(ref T[] mas, T value, int ind)
         {
-            if(ind < mas.Length)
+            if (ind < mas.Length)
             {
                 mas[ind] = value;
             }
             else
             {
                 T[] newMas = new T[mas.Length + 1];
-                mas.CopyTo(newMas, 0); 
+                mas.CopyTo(newMas, 0);
                 newMas[ind] = value;
                 mas = newMas;
             }
@@ -677,6 +677,80 @@ namespace article4
             i = -1;
             res = checkMas(root, mas, ref i);
             return res;
+        }
+        public treeNode<T> find(T element)
+        {
+            treeNode<T> res = null;
+            res = walkThroughTree(root, element);
+            return res;
+        }
+        private treeNode<T> walkThroughTree(treeNode<T> node, T element)
+        {
+            treeNode<T> res = null;
+            if (node != null)
+            {
+                if (node.value.CompareTo(element) == 0)
+                {
+                    res = node;
+                    return res;
+                }
+                else
+                {
+                    res = walkThroughTree(node.left, element);
+                    if (res == null)
+                        res = walkThroughTree(node.right, element);
+                }
+            }
+            return res;
+        }
+        public void del (T element)
+        {
+            treeNode<T> node = find(element);
+            if (node == null)
+                return;
+            if(node.left == null && node.right == null)
+            { 
+                node = null;
+            }
+            else if (node.left == null)
+            {
+                if (node.parent.left == node)
+                {
+                    node.parent.left = node.right;
+                }                  
+                else
+                {
+                    node.parent.right = node.right;
+                }    
+            } 
+            else if(node.right == null)
+            {
+                if (node.parent.left == node)
+                {
+                    node.parent.left = node.left;
+                }
+                else
+                {
+                    node.parent.right = node.left;
+                }
+            }
+            else
+            {
+                if (node.parent.left == node)
+                {
+                    node.parent.left = node.right;
+                }
+                else
+                {
+                    node.parent.right = node.right;
+                }
+            }
+        }
+        private void addTo(treeNode<T> dest, treeNode<T> element)
+        {
+            if (dest == null)
+                return;
+
         }
     }
 }

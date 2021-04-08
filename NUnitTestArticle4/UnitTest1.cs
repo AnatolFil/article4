@@ -415,5 +415,23 @@ namespace NUnitTestArticle4
             res = bt1.Contains(bt1.root.left.right);
             Assert.AreEqual(true, res);
         }
+        [Test]
+        public void TestFindForBinaryTree()
+        {
+            int[] mas1 = { 20, 30, 10, 40, 25, 5, 15, 45, 39, 24, 27, 3, 7, 13 };
+            binaryTree<int> bt1 = new binaryTree<int>();
+            for (int i = 0; i < mas1.Length; i++)
+            {
+                bt1.add(mas1[i]);
+            }
+            Assert.AreEqual(20, bt1.find(20).value);
+            Assert.AreEqual(30, bt1.find(30).value);
+            Assert.AreEqual(10, bt1.find(10).value);
+            Assert.AreEqual(25, bt1.find(25).value);
+            Assert.AreEqual(15, bt1.find(15).value);
+            Assert.AreEqual(27, bt1.find(27).value);
+            Assert.AreEqual(7, bt1.find(7).value);
+            Assert.AreEqual(13, bt1.find(13).value);
+        }
     }
 }

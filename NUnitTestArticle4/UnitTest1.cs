@@ -433,5 +433,34 @@ namespace NUnitTestArticle4
             Assert.AreEqual(7, bt1.find(7).value);
             Assert.AreEqual(13, bt1.find(13).value);
         }
+        [Test]
+        public void TestDelForBinaryTree()
+        {
+            int[] mas1 = { 20, 30, 10, 40, 25, 5, 15, 45, 39, 24, 27, 3, 7, 13 };
+            binaryTree<int> bt1 = new binaryTree<int>();
+            for (int i = 0; i < mas1.Length; i++)
+            {
+                bt1.add(mas1[i]);
+            }
+            bt1.del(30);
+            Assert.AreEqual(bt1.root.right.value, bt1.find(40).value);
+            Assert.AreEqual(25, bt1.find(40).left.left.value);
+            Assert.AreEqual(24, bt1.find(40).left.left.left.value);
+            Assert.AreEqual(27, bt1.find(40).left.left.right.value);
+            Assert.AreEqual(39, bt1.find(40).left.value);
+            Assert.AreEqual(45, bt1.find(40).right.value);
+            bt1.del(15);
+            Assert.AreEqual(13, bt1.find(10).right.value);
+            Assert.AreEqual(null, bt1.find(10).right.left);
+            Assert.AreEqual(null, bt1.find(10).right.right);
+            bt1.del(10);
+            Assert.AreEqual(bt1.root.left.value, bt1.find(13).value);
+            Assert.AreEqual(5, bt1.find(13).left.value);
+            Assert.AreEqual(3, bt1.find(5).left.value);
+            Assert.AreEqual(7, bt1.find(5).right.value);
+            bt1.del(27);
+            Assert.AreEqual(null, bt1.find(25).right);
+            Assert.AreEqual(24, bt1.find(25).left.value);
+        }
     }
 }

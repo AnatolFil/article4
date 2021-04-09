@@ -424,7 +424,6 @@ namespace article4
             }
             return res;
         }
-
         public treeNode<T> findFistCommonParentWithoutParent(treeNode<T> a, treeNode<T> b)
         {
             int depthA = depth(a);
@@ -709,8 +708,15 @@ namespace article4
             if (node == null)
                 return;
             if(node.left == null && node.right == null)
-            { 
-                node = null;
+            {
+                if (node.parent.left == node)
+                {
+                    node.parent.left = null;
+                }
+                else
+                {
+                    node.parent.right = null;
+                }
             }
             else if (node.left == null)
             {
@@ -721,7 +727,8 @@ namespace article4
                 else
                 {
                     node.parent.right = node.right;
-                }    
+                }
+                node.right.parent = node.parent;
             } 
             else if(node.right == null)
             {
@@ -733,24 +740,54 @@ namespace article4
                 {
                     node.parent.right = node.left;
                 }
+                node.left.parent = node.parent;
             }
             else
             {
                 if (node.parent.left == node)
                 {
                     node.parent.left = node.right;
+                    addTo(node.right, node.left);
                 }
                 else
                 {
                     node.parent.right = node.right;
+                    addTo(node.right, node.left);
                 }
+                node.right.parent = node.parent;
             }
         }
         private void addTo(treeNode<T> dest, treeNode<T> element)
         {
             if (dest == null)
-                return;
+                return; 
+            if(element.value.CompareTo(dest.value) >= 0 )
+            {
+                if(dest.right != null)
+                    addTo(dest.right, element);
+                else
+                {
+                    dest.right = element;
+                    element.parent = dest;
+                }
+            }
+            else
+            {
+                if(dest.left != null)
+                    addTo(dest.left, element);
+                else
+                {
+                    dest.left = element;
+                    element.parent = dest;
+                }
+            }
 
+        }
+        public treeNode<T> getRandom()
+        {
+            treeNode<T> res = null;
+
+            return res;
         }
     }
 }

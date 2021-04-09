@@ -786,8 +786,21 @@ namespace article4
         public treeNode<T> getRandom()
         {
             treeNode<T> res = null;
-
+            List<treeNode<T>> list = new List<treeNode<T>>();
+            int i = -1;
+            treeToList(root, list);
+            Random rand = new Random(DateTime.Now.Millisecond);
+            res = list[rand.Next() % list.Count];
             return res;
         }
+        private void treeToList(treeNode<T> node, List<treeNode<T>> list)
+        {
+            if (node == null || list == null)
+                return;
+            treeToList(node.left, list);
+            list.Add(node);
+            treeToList(node.right, list);
+        }
+        
     }
 }

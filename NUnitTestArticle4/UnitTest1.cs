@@ -462,5 +462,21 @@ namespace NUnitTestArticle4
             Assert.AreEqual(null, bt1.find(25).right);
             Assert.AreEqual(24, bt1.find(25).left.value);
         }
+        [Test]
+        public void TestGetRandomForBinaryTree()
+        {
+            int[] mas1 = { 20, 30, 10, 40, 25, 5, 15, 45, 39, 24, 27, 3, 7, 13 };
+            binaryTree<int> bt1 = new binaryTree<int>();
+            for (int i = 0; i < mas1.Length; i++)
+            {
+                bt1.add(mas1[i]);
+            }
+            treeNode<int> node =  null;
+            for(int i=0;i<100000; i++)
+            {
+                node = bt1.getRandom();
+                Assert.AreNotEqual(null, node);
+            }
+        }
     }
 }

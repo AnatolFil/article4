@@ -478,5 +478,21 @@ namespace NUnitTestArticle4
                 Assert.AreNotEqual(null, node);
             }
         }
+        [Test]
+        public void TestGetAllSumForBinaryTree()
+        {
+            int[] mas1 = { 4, 20, -1,16, -7, -10, 9, 14, 11, -3, 0, 17, 1, 22 };
+            binaryTree<int> bt1 = new binaryTree<int>();
+            for (int i = 0; i < mas1.Length; i++)
+            {
+                bt1.add(mas1[i]);
+            }
+            int res = bt1.getAllSum(-4, bt1.root);
+            Assert.AreEqual(1, res);
+            res = bt1.getAllSum(63, bt1.root);
+            Assert.AreEqual(1, res);
+            res = bt1.getAllSum(0, bt1.root);
+            Assert.AreEqual(0, res);
+        }
     }
 }

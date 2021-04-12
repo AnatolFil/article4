@@ -801,6 +801,49 @@ namespace article4
             list.Add(node);
             treeToList(node.right, list);
         }
+        public int getAllSum(int numb, treeNode<int> node)
+        {
+            List<List<treeNode<int>>> res = new List<List<treeNode<int>>>();
+            int sum = 0;
+            int foundedWays = 0;
+            checkWay(node, numb, new List<treeNode<int>>(), sum, res, ref foundedWays);
+            return foundedWays;
+        }
+        private void checkWay(treeNode<int> node, int numb, List<treeNode<int>> list, int sum, List<List<treeNode<int>>> res, ref int foundedWays)
+        {
+            if (node == null)
+                return;
+            list.Add(node);
+            sum += node.value;
+            if(sum == numb)
+            {
+                res.Add(list);
+                foundedWays++;
+                return;
+            }
+            if (numb >= 0)
+            {
+                if (node.right != null && sum + node.right.value <= numb)
+                {
+                    checkWay(node.right, numb, list, sum, res, ref foundedWays);
+                }
+                if(node.left != null && sum + node.left.value >=0)
+                {
+                    checkWay(node.left, numb, list, sum, res, ref foundedWays);
+                }                
+            }
+            else if (numb < 0)
+            {
+                if (node.right != null && sum + node.right.value < 0)
+                {
+                    checkWay(node.right, numb, list, sum, res, ref foundedWays);
+                }
+                if (node.left != null && sum + node.left.value >= numb)
+                {
+                    checkWay(node.left, numb, list, sum, res, ref foundedWays);
+                }
+            }
+        }
         
     }
 }

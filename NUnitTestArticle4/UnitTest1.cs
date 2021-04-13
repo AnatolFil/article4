@@ -492,7 +492,15 @@ namespace NUnitTestArticle4
             res = bt1.getAllSum(63, bt1.root);
             Assert.AreEqual(1, res);
             res = bt1.getAllSum(0, bt1.root);
+            Assert.AreEqual(2, res);
+            res = bt1.getAllSum(1000, bt1.root);
             Assert.AreEqual(0, res);
+            res = bt1.getAllSum(39, bt1.root);
+            Assert.AreEqual(1, res);
+            res = bt1.getAllSum(-11, bt1.root);
+            Assert.AreEqual(1, res);
+            res = bt1.getAllSum(-4, bt1.root);
+            Assert.AreEqual(1, res);
         }
     }
 }

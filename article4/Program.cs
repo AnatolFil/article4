@@ -806,18 +806,16 @@ namespace article4
             List<List<treeNode<int>>> res = new List<List<treeNode<int>>>();
             int sum = 0;
             int foundedWays = 0;
-            checkWay(node, numb, new List<treeNode<int>>(), sum, res, ref foundedWays);
+            checkAllWays(node, numb, ref foundedWays);
             return foundedWays;
         }
-        private void checkWay(treeNode<int> node, int numb, List<treeNode<int>> list, int sum, List<List<treeNode<int>>> res, ref int foundedWays)
+        private void checkWay(treeNode<int> node, int numb, int sum, ref int foundedWays)
         {
             if (node == null)
                 return;
-            list.Add(node);
             sum += node.value;
             if(sum == numb)
             {
-                res.Add(list);
                 foundedWays++;
                 return;
             }
@@ -825,25 +823,33 @@ namespace article4
             {
                 if (node.right != null && sum + node.right.value <= numb)
                 {
-                    checkWay(node.right, numb, list, sum, res, ref foundedWays);
+                    checkWay(node.right, numb,sum,ref foundedWays);
                 }
                 if(node.left != null && sum + node.left.value >=0)
                 {
-                    checkWay(node.left, numb, list, sum, res, ref foundedWays);
+                    checkWay(node.left, numb, sum, ref foundedWays);
                 }                
             }
             else if (numb < 0)
             {
                 if (node.right != null && sum + node.right.value < 0)
                 {
-                    checkWay(node.right, numb, list, sum, res, ref foundedWays);
+                    checkWay(node.right, numb, sum, ref foundedWays);
                 }
                 if (node.left != null && sum + node.left.value >= numb)
                 {
-                    checkWay(node.left, numb, list, sum, res, ref foundedWays);
+                    checkWay(node.left, numb, sum, ref foundedWays);
                 }
             }
         }
-        
+        private void checkAllWays(treeNode<int> node, int numb, ref int foundedWays)
+        {
+            if (node == null)
+                return;
+            int sum = 0;
+            checkWay(node, numb, sum, ref foundedWays);
+            checkAllWays(node.left, numb, ref foundedWays);
+            checkAllWays(node.right, numb, ref foundedWays);
+        }
     }
 }

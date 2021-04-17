@@ -851,5 +851,33 @@ namespace article4
             checkAllWays(node.left, numb, ref foundedWays);
             checkAllWays(node.right, numb, ref foundedWays);
         }
+        private void countPath(treeNode<int> node, int numb, int sum, Hashtable ht, ref int totalCount)
+        {
+            if (node == null)
+                return;
+            sum += node.value;
+            int runnigSum = sum - numb;
+            if (!ht.Contains(sum))
+                ht.Add(sum, 1);
+            else
+            {
+                int count = (int) ht[sum];
+                count++;
+                ht[sum] = count;
+            }
+            if (ht.Contains(runnigSum))
+                totalCount++;
+            countPath(node.left, numb, sum, ht, ref totalCount);
+            countPath(node.right, numb, sum, ht, ref totalCount);
+        }
+        public int countAllPaths(int numb, treeNode<int> node)
+        {
+            int res = 0;
+            Hashtable ht = new Hashtable();
+            ht.Add(0, 1);
+            int sum = 0;
+            countPath(node, numb, sum, ht, ref res);
+            return res;
+        }
     }
 }
